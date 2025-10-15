@@ -4,4 +4,29 @@
   body {
     font-family: system-ui, sans-serif;
   }
+  table {
+    display: block;
+    overflow-x: auto;
+    overflow-y: visible;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    border-collapse: collapse;
+  }
+  table :where(td, th) {
+    text-align: start;
+    vertical-align: baseline;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #cccccc;
+    padding-inline: 0.5em;
+    padding-block: 0.25em;
+  }
+  .wrapper.grid-based {
+    display: grid;
+    grid-template-columns: 1fr min(42rem, 100%) 1fr;
+    padding-inline: 1rem;
+  }
+  .wrapper.grid-based > * {
+    grid-column-start: 2;
+  }
 }
