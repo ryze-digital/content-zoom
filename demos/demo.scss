@@ -33,23 +33,44 @@
             }
         }
     }
-    .wrapper {
-        &.grid-based {
-            display: grid;
+    .grid-based {
+        display: grid;
+        grid: {
+            template: {
+                columns: 1fr min(42rem, 100%) 1fr;
+            }
+        }
+        padding: {
+            inline: 1rem;
+        }
+        > * {
             grid: {
-                template: {
-                    columns: 1fr min(42rem, 100%) 1fr;
+                column: {
+                    start: 2;
                 }
             }
-            padding: {
-                inline: 1rem;
+        }
+    }
+    // TBD set this styles explicitly or should they add this class to the content-zoom element manually?
+    .full-bleed {
+        grid: {
+            column: {
+                start: 1;
+                end: 4;
             }
-            > * {
-                grid: {
-                    column: {
-                        start: 2;
-                    }
-                }
+        }
+    }
+    .content-zoom {
+        transition: max-width 1s ease;
+        max: {
+            width: min(42rem, 100%);
+        }
+        margin: {
+            inline: auto;
+        }
+        &.zoom {
+            max: {
+                width: 100%;
             }
         }
     }
