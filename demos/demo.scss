@@ -1,0 +1,11 @@
+@layer demo-styles, example-implementation;
+
+@layer example-implementation {}
+
+@layer demo-styles {
+    body {
+        font: {
+            family: system-ui, sans-serif;
+        }
+    }
+}
