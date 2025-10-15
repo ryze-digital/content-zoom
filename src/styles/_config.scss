@@ -1,0 +1,13 @@
+@use "sass:map";
+
+$-config: (
+
+);
+
+@mixin configure($config) {
+    $-config: map.deep-merge($-config, $config) !global;
+}
+
+@function get($key...) {
+    @return map.get($-config, $key...);
+}
