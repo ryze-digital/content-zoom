@@ -22,7 +22,7 @@ export class ContentZoom extends Base {
             this.options.overflowElement = this.options.container;
         }
 
-        if (this.#isContentOverflowing) {
+        if (this.#isContentOverflowing()) {
             this.#appendZoomButton();
         }
     }

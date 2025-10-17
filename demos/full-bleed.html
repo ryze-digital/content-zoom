@@ -124,7 +124,10 @@
 <script type="module">
     import { ContentZoom } from '../index.js';
 
-    new ContentZoom(document.querySelector('.content-zoom'), document.querySelector('.content-zoom table'));
+    new ContentZoom({
+        container: document.querySelector('.content-zoom'),
+        overflowElement: document.querySelector('.content-zoom table')
+    });
 </script>
 </body>
 </html>
