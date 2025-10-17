@@ -29,7 +29,7 @@
         libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed
         fringilla mauris sit amet nibh. Donec sodales sagittis magna.
     </p>
-    <div class="content-zoom full-bleed">
+    <div class="content-zoom">
         <h2>Content to zoom</h2>
         <table>
             <thead>
@@ -117,7 +117,7 @@
 <script type="module">
     import { ContentZoom } from '../index.js';
 
-    new ContentZoom();
+    new ContentZoom(document.querySelector('.content-zoom'), document.querySelector('.content-zoom table'));
 </script>
 </body>
 </html>

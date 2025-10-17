@@ -1,0 +1,27 @@
+@use "config";
+
+@mixin full-bleed() {
+    position: relative;
+    transition: {
+        property: max-width;
+        duration: config.get("full-bleed", "transition-duration");
+        timing-function: ease-in-out;
+    }
+    max: {
+        width: min(config.get("full-bleed", "max-width"), 100%);
+    }
+    margin: {
+        inline: auto;
+    }
+    grid: {
+        column: {
+            start: 1;
+            end: -1;
+        }
+    }
+    &.zoom {
+        max: {
+            width: 100%;
+        }
+    }
+}

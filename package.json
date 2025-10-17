@@ -19,7 +19,7 @@
     "build": "npm-run-all --parallel lint:* sass:build --continue-on-error",
     "watch": "npm run sass:watch",
     "sass:build": "sass demos/demo.scss:demos/build/demo.css --no-source-map --load-path=node_modules",
-    "sass:watch": "sass demos/demo.scss:demos/build/demo.css --no-source-map --load-path=node_modules --watch --poll"
+    "sass:watch": "sass demos/demo.scss:demos/build/demo.css --no-source-map --load-path=node_modules --load-path=src/styles --watch --poll"
   },
   "devDependencies": {
     "@ryze-digital/eslint-config-website": "^1.0.1",
