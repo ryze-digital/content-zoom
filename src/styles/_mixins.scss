@@ -1,22 +1,26 @@
 @use "config";
 
-@mixin full-bleed() {
+@mixin full-bleed(
+    $max-width: config.get("full-bleed", "max-width"),
+    $grid-column-start: config.get("full-bleed", "grid-column", "start"),
+    $grid-column-end: config.get("full-bleed", "grid-column", "end")
+) {
     position: relative;
     transition: {
         property: max-width;
-        duration: config.get("full-bleed", "transition-duration");
-        timing-function: ease-in-out;
+        duration: config.get("full-bleed", "transition", "duration");
+        timing-function: config.get("full-bleed", "transition", "timing-function");
     }
     max: {
-        width: min(config.get("full-bleed", "max-width"), 100%);
+        width: min($max-width, 100%);
     }
     margin: {
         inline: auto;
     }
     grid: {
         column: {
-            start: 1;
-            end: -1;
+            start: $grid-column-start;
+            end: $grid-column-end;
         }
     }
     &.zoom {
