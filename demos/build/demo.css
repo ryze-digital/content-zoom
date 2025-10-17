@@ -5,13 +5,13 @@
     transition-property: max-width;
     transition-duration: 300ms;
     transition-timing-function: ease-in-out;
-    max-width: min(42rem, 100%);
+    max-inline-size: min(42rem, 100%);
     margin-inline: auto;
     grid-column-start: 1;
     grid-column-end: -1;
   }
   .content-zoom.zoom {
-    max-width: 100%;
+    max-inline-size: 100%;
   }
 }
 @layer demo-styles {

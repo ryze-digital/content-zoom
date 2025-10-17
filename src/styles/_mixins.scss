@@ -12,7 +12,9 @@
         timing-function: config.get("full-bleed", "transition", "timing-function");
     }
     max: {
-        width: min($max-width, 100%);
+        inline: {
+            size: min($max-width, 100%);
+        }
     }
     margin: {
         inline: auto;
@@ -25,7 +27,9 @@
     }
     &.zoom {
         max: {
-            width: 100%;
+            inline: {
+                size: 100%;
+            }
         }
     }
 }
