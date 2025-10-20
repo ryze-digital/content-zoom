@@ -126,7 +126,9 @@
 
     new ContentZoom({
         container: document.querySelector('.content-zoom'),
-        overflowElement: document.querySelector('.content-zoom table')
+        elements: {
+            overflowingChild: document.querySelector('.content-zoom table')
+        }
     });
 </script>
 </body>

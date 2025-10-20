@@ -23,17 +23,20 @@ export class ContentZoom extends Base {
             el: document.querySelector('.content-zoom'),
             autoDetectOverflow: true,
             autoDetectZoomability: true,
-            overflowElement: null,
-            zoomabilityElement: document.body,
             buttonLabel: 'Zoom',
+            elements: {
+                overflowingChild: null,
+                limitingAncestor: document.body,
+                buttonTarget: null
+            },
             classes: {
                 contendZoomed: 'zoom',
                 triggerButton: 'content-zoom-trigger'
             }
         }, options);
 
-        if (this.options.overflowElement === null) {
-            this.options.overflowElement = this.options.el;
+        if (this.options.elements.overflowingChild === null) {
+            this.options.elements.overflowingChild = this.options.el;
         }
 
         this.#appendZoomButton();
@@ -48,7 +51,7 @@ export class ContentZoom extends Base {
             return true;
         }
 
-        return this.options.overflowElement.scrollWidth > this.options.overflowElement.clientWidth;
+        return this.options.elements.overflowingChild.scrollWidth > this.options.elements.overflowingChild.clientWidth;
     }
 
     /**
@@ -59,7 +62,7 @@ export class ContentZoom extends Base {
             return true;
         }
 
-        return this.options.zoomabilityElement.clientWidth > this.options.el.clientWidth;
+        return this.options.elements.limitingAncestor.clientWidth > this.options.el.clientWidth;
     }
 
     #appendZoomButton() {
@@ -72,7 +75,11 @@ export class ContentZoom extends Base {
         this.#zoomButton.classList.add(this.options.classes.triggerButton);
         this.#zoomButton.addEventListener('click', this.toggleZoom);
 
-        this.options.el.prepend(this.#zoomButton);
+        if (this.options.elements.buttonTarget === null) {
+            this.options.el.prepend(this.#zoomButton);
+        } else {
+            this.options.elements.buttonTarget.append(this.#zoomButton);
+        }
     }
 
     #updateZoomButtonVisibility = () => {
