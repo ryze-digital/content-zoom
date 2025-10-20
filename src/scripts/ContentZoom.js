@@ -1,9 +1,22 @@
 import { Base, ReduceFunctionCalls } from '@ryze-digital/js-utilities';
+import { FullBleed } from './FullBleed.js';
+
+/**
+ * @typedef {object} Mode
+ * @property {Function} zoomIn
+ * @property {Function} zoomOut
+ */
+const Modes = { FullBleed };
 
 export class ContentZoom extends Base {
     /**
+     * @type {Mode}
+     */
+    #mode;
+
+    /**
      * @type {HTMLButtonElement}
-     * */
+     */
     #zoomButton = document.createElement('button');
 
     /**
@@ -14,13 +27,17 @@ export class ContentZoom extends Base {
     /**
      * @param {object} options
      * @param {HTMLElement} [options.el]
+     * @param {'FullBleed'|'Dialog'} [options.mode]
      * @param {boolean} [options.autoDetectOverflow]
-     * @param {HTMLElement} [options.overflowElement]
+     * @param {boolean} [options.autoDetectZoomability]
      * @param {string} [options.buttonLabel]
+     * @param {object} [options.elements]
+     * @param {object} [options.classes]
      */
     constructor(options) {
         super({
             el: document.querySelector('.content-zoom'),
+            mode: 'FullBleed',
             autoDetectOverflow: true,
             autoDetectZoomability: true,
             buttonLabel: 'Zoom',
@@ -38,6 +55,8 @@ export class ContentZoom extends Base {
         if (this.options.elements.overflowingChild === null) {
             this.options.elements.overflowingChild = this.options.el;
         }
+
+        this.#mode = new Modes[this.options.mode](this.options);
 
         this.#appendZoomButton();
         window.addEventListener('resize', ReduceFunctionCalls.throttle(this.#updateZoomButtonVisibility));
@@ -84,9 +103,15 @@ export class ContentZoom extends Base {
 
     #updateZoomButtonVisibility = () => {
         this.#zoomButton.hidden = !((this.#isContentOverflowing() && this.#isViewportIsBiggerThanEl()) || this.#contentZoomed === true);
-    }
+    };
 
     toggleZoom = () => {
-        this.options.el.classList.toggle(this.options.classes.contendZoomed);
+        if (this.#contentZoomed) {
+            this.#mode.zoomOut();
+            this.#contentZoomed = false;
+        } else {
+            this.#mode.zoomIn();
+            this.#contentZoomed = true;
+        }
     };
 }
