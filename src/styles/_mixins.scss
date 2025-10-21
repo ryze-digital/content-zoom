@@ -25,11 +25,16 @@
             end: $grid-column-end;
         }
     }
-    &.zoom {
+    &.#{config.get("full-bleed", "classes", "contentZoomed")} {
         max: {
             inline: {
                 size: 100%;
             }
         }
     }
+}
+
+@mixin dialog() {
+    position: fixed;
+    inset: 0;
 }

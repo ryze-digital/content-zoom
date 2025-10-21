@@ -1,12 +1,13 @@
 import { Base, ReduceFunctionCalls } from '@ryze-digital/js-utilities';
 import { FullBleed } from './FullBleed.js';
+import { Dialog } from './Dialog.js';
 
 /**
  * @typedef {object} Mode
  * @property {Function} zoomIn
  * @property {Function} zoomOut
  */
-const Modes = { FullBleed };
+const Modes = { FullBleed, Dialog };
 
 export class ContentZoom extends Base {
     /**
@@ -47,8 +48,9 @@ export class ContentZoom extends Base {
                 buttonTarget: null
             },
             classes: {
-                contendZoomed: 'zoom',
-                triggerButton: 'content-zoom-trigger'
+                contentZoomed: 'zoom',
+                triggerButton: 'content-zoom-trigger',
+                dialog: 'content-zoom-dialog'
             }
         }, options);
 
@@ -56,7 +58,7 @@ export class ContentZoom extends Base {
             this.options.elements.overflowingChild = this.options.el;
         }
 
-        this.#mode = new Modes[this.options.mode](this.options);
+        this.#mode = new Modes[this.options.mode](this);
 
         this.#appendZoomButton();
         window.addEventListener('resize', ReduceFunctionCalls.throttle(this.#updateZoomButtonVisibility));
@@ -106,12 +108,16 @@ export class ContentZoom extends Base {
     };
 
     toggleZoom = () => {
-        if (this.#contentZoomed) {
-            this.#mode.zoomOut();
-            this.#contentZoomed = false;
-        } else {
-            this.#mode.zoomIn();
-            this.#contentZoomed = true;
-        }
+        this.#contentZoomed ? this.zoomOut() : this.zoomIn();
+    };
+
+    zoomOut = () => {
+        this.#mode.zoomOut();
+        this.#contentZoomed = false;
+    };
+
+    zoomIn = () => {
+        this.#mode.zoomIn();
+        this.#contentZoomed = true;
     };
 }

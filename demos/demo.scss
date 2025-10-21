@@ -7,6 +7,9 @@
     .content-zoom {
         @include content-zoom.full-bleed();
     }
+    .content-zoom-dialog {
+        @include content-zoom.dialog();
+    }
 }
 
 @layer demo-styles {

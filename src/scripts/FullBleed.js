@@ -7,17 +7,17 @@
  */
 export class FullBleed {
     /**
-     * @param {object} options
+     * @param {object} contentZoom
      */
-    constructor(options) {
-        this.options = options;
+    constructor(contentZoom) {
+        this.contentZoom = contentZoom;
     }
 
     zoomIn() {
-        this.options.el.classList.add(this.options.classes.contendZoomed);
+        this.contentZoom.options.el.classList.add(this.contentZoom.options.classes.contentZoomed);
     }
 
     zoomOut() {
-        this.options.el.classList.remove(this.options.classes.contendZoomed);
+        this.contentZoom.options.el.classList.remove(this.contentZoom.options.classes.contentZoomed);
     }
 }

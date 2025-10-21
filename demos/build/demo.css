@@ -13,6 +13,10 @@
   .content-zoom.zoom {
     max-inline-size: 100%;
   }
+  .content-zoom-dialog {
+    position: fixed;
+    inset: 0;
+  }
 }
 @layer demo-styles {
   body {
