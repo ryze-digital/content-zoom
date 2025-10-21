@@ -41,7 +41,10 @@ export class ContentZoom extends Base {
             mode: 'FullBleed',
             autoDetectOverflow: true,
             autoDetectZoomability: true,
-            buttonLabel: 'Zoom',
+            labels: {
+                zoomIn: 'Expand content',
+                zoomOut: 'Collapse content'
+            },
             elements: {
                 overflowingChild: null,
                 limitingAncestor: document.body,
@@ -88,7 +91,7 @@ export class ContentZoom extends Base {
 
     #appendZoomButton() {
         Object.assign(this.#zoomButton, {
-            textContent: this.options.buttonLabel,
+            textContent: this.options.labels.zoomIn,
             ariaHidden: 'true'
         });
 
@@ -114,10 +117,12 @@ export class ContentZoom extends Base {
     zoomOut = () => {
         this.#mode.zoomOut();
         this.#contentZoomed = false;
+        this.#zoomButton.textContent = this.options.labels.zoomIn;
     };
 
     zoomIn = () => {
         this.#mode.zoomIn();
         this.#contentZoomed = true;
+        this.#zoomButton.textContent = this.options.labels.zoomOut;
     };
 }

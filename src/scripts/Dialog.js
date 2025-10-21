@@ -34,7 +34,7 @@ export class Dialog {
         this.#dialog.innerHTML = this.contentZoom.options.el.innerHTML;
         this.#dialog.classList.add(this.contentZoom.options.classes.dialog);
 
-        closeButton.innerText = 'Close';
+        closeButton.innerText = this.contentZoom.options.labels.zoomOut;
         closeButton.addEventListener('click', this.contentZoom.zoomOut);
 
         this.#dialog.prepend(closeButton);
