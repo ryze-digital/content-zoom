@@ -42,7 +42,11 @@
         $duration: config.get("dialog", "transition", "duration");
         transition: {
             property: scale, opacity, display, overlay;
-            duration: $duration, $duration / 2, $duration, $duration;
+            duration:
+                $duration,
+                $duration / 2,
+                $duration,
+                $duration;
             behavior: normal, normal, allow-discrete, allow-discrete;
         }
         scale: 0.8;

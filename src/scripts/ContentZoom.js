@@ -68,6 +68,9 @@ export class ContentZoom extends Base {
         window.addEventListener('resize', ReduceFunctionCalls.throttle(this.#updateZoomButtonVisibility));
     }
     
+    /**
+     * @returns {boolean}
+     */
     get zoomed() {
         return this.#zoomed;
     }
@@ -77,7 +80,7 @@ export class ContentZoom extends Base {
      */
     set zoomed(state) {
         if (typeof state !== 'boolean') {
-           throw new Error('The zoomed state must be a boolean.');
+            throw new Error('The zoomed state must be a boolean.');
         }
 
         this.#zoomed = state;

@@ -55,5 +55,5 @@ export class Dialog {
 
         this.contentZoom.zoomed = false;
         this.contentZoom.zoomButton.textContent = this.contentZoom.options.labels.zoomIn;
-    }
+    };
 }
