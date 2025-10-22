@@ -31,14 +31,20 @@ export class Dialog {
     #createDialog() {
         const closeButton = document.createElement('button');
 
+        Object.assign(closeButton, {
+            textContent: this.contentZoom.options.labels.zoomOut,
+            type: 'button'
+        });
+
+        closeButton.classList.add(this.contentZoom.options.classes.button);
+        closeButton.classList.add(this.contentZoom.options.classes.buttonActive);
+        closeButton.addEventListener('click', this.contentZoom.zoomOut);
+
         this.#dialog.innerHTML = this.contentZoom.options.el.innerHTML;
         this.#dialog.classList.add(this.contentZoom.options.classes.dialog);
         this.#dialog.addEventListener('close', this.#cleanUpAfterClose);
-
-        closeButton.innerText = this.contentZoom.options.labels.zoomOut;
-        closeButton.addEventListener('click', this.contentZoom.zoomOut);
-
         this.#dialog.prepend(closeButton);
+
         document.body.append(this.#dialog);
     }
 
