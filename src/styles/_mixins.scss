@@ -38,4 +38,35 @@
     border: {
         style: none;
     }
+    @media (prefers-reduced-motion: no-preference) {
+        transition: {
+            property: scale, opacity, display, overlay;
+            duration: 400ms, 200ms, 400ms, 400ms;
+            behavior: normal, normal, allow-discrete, allow-discrete;
+        }
+        scale: 0.8;
+        opacity: 0;
+        &::backdrop {
+            transition: {
+                property: opacity, display, overlay;
+                duration: 200ms;
+                behavior: normal, allow-discrete, allow-discrete;
+            }
+            opacity: 0;
+        }
+        &[open] {
+            scale: 1;
+            opacity: 1;
+            @starting-style {
+                scale: 0.8;
+                opacity: 0;
+            }
+            &::backdrop {
+                opacity: 1;
+                @starting-style {
+                    opacity: 0;
+                }
+            }
+        }
+    }
 }

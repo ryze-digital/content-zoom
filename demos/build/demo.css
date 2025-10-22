@@ -16,6 +16,39 @@
   .content-zoom-dialog {
     border-style: none;
   }
+  @media (prefers-reduced-motion: no-preference) {
+    .content-zoom-dialog {
+      transition-property: scale, opacity, display, overlay;
+      transition-duration: 400ms, 200ms, 400ms, 400ms;
+      transition-behavior: normal, normal, allow-discrete, allow-discrete;
+      scale: 0.8;
+      opacity: 0;
+    }
+    .content-zoom-dialog::backdrop {
+      transition-property: opacity, display, overlay;
+      transition-duration: 200ms;
+      transition-behavior: normal, allow-discrete, allow-discrete;
+      opacity: 0;
+    }
+    .content-zoom-dialog[open] {
+      scale: 1;
+      opacity: 1;
+    }
+    @starting-style {
+      .content-zoom-dialog[open] {
+        scale: 0.8;
+        opacity: 0;
+      }
+    }
+    .content-zoom-dialog[open]::backdrop {
+      opacity: 1;
+    }
+    @starting-style {
+      .content-zoom-dialog[open]::backdrop {
+        opacity: 0;
+      }
+    }
+  }
 }
 @layer demo-styles {
   body {
