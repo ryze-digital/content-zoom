@@ -39,9 +39,10 @@
         style: none;
     }
     @media (prefers-reduced-motion: no-preference) {
+        $duration: config.get("dialog", "transition", "duration");
         transition: {
             property: scale, opacity, display, overlay;
-            duration: 400ms, 200ms, 400ms, 400ms;
+            duration: $duration, $duration / 2, $duration, $duration;
             behavior: normal, normal, allow-discrete, allow-discrete;
         }
         scale: 0.8;
@@ -49,7 +50,7 @@
         &::backdrop {
             transition: {
                 property: opacity, display, overlay;
-                duration: 200ms;
+                duration: $duration / 2;
                 behavior: normal, allow-discrete, allow-discrete;
             }
             opacity: 0;
