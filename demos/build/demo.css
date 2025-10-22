@@ -45,4 +45,7 @@
   .grid-based > * {
     grid-column-start: 2;
   }
+  img {
+    max-inline-size: 100%;
+  }
 }
