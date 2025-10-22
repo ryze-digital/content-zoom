@@ -14,10 +14,10 @@ export class FullBleed {
     }
 
     zoomIn() {
-        this.contentZoom.options.el.classList.add(this.contentZoom.options.classes.contentZoomed);
+        this.contentZoom.options.el.classList.add(this.contentZoom.options.classes.zoomed);
     }
 
     zoomOut() {
-        this.contentZoom.options.el.classList.remove(this.contentZoom.options.classes.contentZoomed);
+        this.contentZoom.options.el.classList.remove(this.contentZoom.options.classes.zoomed);
     }
 }

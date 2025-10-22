@@ -21,7 +21,7 @@ export class Dialog {
     }
 
     zoomIn() {
-        this.#dialog.show();
+        this.#dialog.showModal();
     }
 
     zoomOut() {
@@ -33,11 +33,21 @@ export class Dialog {
 
         this.#dialog.innerHTML = this.contentZoom.options.el.innerHTML;
         this.#dialog.classList.add(this.contentZoom.options.classes.dialog);
+        this.#dialog.addEventListener('close', this.#cleanUpAfterClose);
 
         closeButton.innerText = this.contentZoom.options.labels.zoomOut;
         closeButton.addEventListener('click', this.contentZoom.zoomOut);
 
         this.#dialog.prepend(closeButton);
         document.body.append(this.#dialog);
+    }
+
+    #cleanUpAfterClose = () => {
+        if (this.contentZoom.zoomed === false) {
+            return;
+        }
+
+        this.contentZoom.zoomed = false;
+        this.contentZoom.zoomButton.textContent = this.contentZoom.options.labels.zoomIn;
     }
 }

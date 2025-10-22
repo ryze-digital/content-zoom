@@ -25,7 +25,7 @@
             end: $grid-column-end;
         }
     }
-    &.#{config.get("full-bleed", "classes", "contentZoomed")} {
+    &.#{config.get("full-bleed", "classes", "zoomed")} {
         max: {
             inline: {
                 size: 100%;
@@ -35,6 +35,7 @@
 }
 
 @mixin dialog() {
-    position: fixed;
-    inset: 0;
+    border: {
+        style: none;
+    }
 }

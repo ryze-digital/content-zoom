@@ -18,12 +18,12 @@ export class ContentZoom extends Base {
     /**
      * @type {HTMLButtonElement}
      */
-    #zoomButton = document.createElement('button');
+    zoomButton = document.createElement('button');
 
     /**
      * @type {boolean}
      */
-    #contentZoomed = false;
+    #zoomed = false;
 
     /**
      * @param {object} options
@@ -51,7 +51,7 @@ export class ContentZoom extends Base {
                 buttonTarget: null
             },
             classes: {
-                contentZoomed: 'zoom',
+                zoomed: 'zoom',
                 triggerButton: 'content-zoom-trigger',
                 dialog: 'content-zoom-dialog'
             }
@@ -65,6 +65,21 @@ export class ContentZoom extends Base {
 
         this.#appendZoomButton();
         window.addEventListener('resize', ReduceFunctionCalls.throttle(this.#updateZoomButtonVisibility));
+    }
+    
+    get zoomed() {
+        return this.#zoomed;
+    }
+
+    /**
+     * @param {boolean} state
+     */
+    set zoomed(state) {
+        if (typeof state !== 'boolean') {
+           throw new Error('The zoomed state must be a boolean.');
+        }
+
+        this.#zoomed = state;
     }
 
     /**
@@ -90,39 +105,39 @@ export class ContentZoom extends Base {
     }
 
     #appendZoomButton() {
-        Object.assign(this.#zoomButton, {
+        Object.assign(this.zoomButton, {
             textContent: this.options.labels.zoomIn,
             ariaHidden: 'true'
         });
 
         this.#updateZoomButtonVisibility();
-        this.#zoomButton.classList.add(this.options.classes.triggerButton);
-        this.#zoomButton.addEventListener('click', this.toggleZoom);
+        this.zoomButton.classList.add(this.options.classes.triggerButton);
+        this.zoomButton.addEventListener('click', this.toggleZoom);
 
         if (this.options.elements.buttonTarget === null) {
-            this.options.el.prepend(this.#zoomButton);
+            this.options.el.prepend(this.zoomButton);
         } else {
-            this.options.elements.buttonTarget.append(this.#zoomButton);
+            this.options.elements.buttonTarget.append(this.zoomButton);
         }
     }
 
     #updateZoomButtonVisibility = () => {
-        this.#zoomButton.hidden = !((this.#isContentOverflowing() && this.#isViewportIsBiggerThanEl()) || this.#contentZoomed === true);
+        this.zoomButton.hidden = !((this.#isContentOverflowing() && this.#isViewportIsBiggerThanEl()) || this.#zoomed === true);
     };
 
     toggleZoom = () => {
-        this.#contentZoomed ? this.zoomOut() : this.zoomIn();
+        this.#zoomed ? this.zoomOut() : this.zoomIn();
     };
 
     zoomOut = () => {
         this.#mode.zoomOut();
-        this.#contentZoomed = false;
-        this.#zoomButton.textContent = this.options.labels.zoomIn;
+        this.zoomed = false;
+        this.zoomButton.textContent = this.options.labels.zoomIn;
     };
 
     zoomIn = () => {
         this.#mode.zoomIn();
-        this.#contentZoomed = true;
-        this.#zoomButton.textContent = this.options.labels.zoomOut;
+        this.zoomed = true;
+        this.zoomButton.textContent = this.options.labels.zoomOut;
     };
 }
