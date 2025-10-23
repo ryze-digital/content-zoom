@@ -122,6 +122,10 @@ export class ContentZoom extends Base {
         this.zoomButton.classList.add(this.options.classes.button);
         this.zoomButton.addEventListener('click', this.toggleZoom);
 
+        if (this.options.el.id !== '') {
+            this.zoomButton.setAttribute('aria-controls', this.options.el.id);
+        }
+
         if (this.options.elements.buttonTarget === null) {
             this.options.el.prepend(this.zoomButton);
         } else {

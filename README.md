@@ -13,10 +13,11 @@ npm i @ryze-digital/content-zoom --save
 ### HTML
 
 You have to wrap the content that should be zoomable into a shared container. By default we are looking for a class
-called `content-zoom`.
+called `content-zoom`. To give us the ability to generate `aria-controls` accordingly, it also makes sense to specify an
+`id` attribute.
 
 ```html
-<div class="content-zoom">
+<div class="content-zoom" id="your-unique-identifier">
     // Your zoomable content goes here
 </div>
 ```
