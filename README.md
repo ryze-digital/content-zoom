@@ -80,7 +80,7 @@ fallback "Dialog" mode.
 ```js
 import { ContentZoom } from '@ryze-digital/content-zoom';
 
-new ContentZoom({...});
+new ContentZoom({...}).init();
 ```
 
 <details>
@@ -99,6 +99,30 @@ new ContentZoom({...});
 | elements.buttonTarget     | HTMLElement | <code>null</code>                                                                                                                                                                     | The element the button gets appended to. If `null` the button becomes the first child of `el`.                                                                                                         |
 | classes                   | object      | <pre>{<br>&nbsp;&nbsp;zoomed: 'zoom',<br>&nbsp;&nbsp;button: 'content-zoom-trigger',<br>&nbsp;&nbsp;buttonActive: 'zoom-out',<br>&nbsp;&nbsp;dialog: 'content-zoom-dialog'<br>}</pre> | Selectors that are used internally or states that will be added to elements                                                                                                                            |
 </details>
+
+### Special note for tables
+
+This library works with any kind of content but was designed with tables in mind. If you want to use it for tables, you 
+have to consider the following: Tables usually already have a solution for overflowing content — the scrollbar at the 
+bottom. This makes it impossible for us to auto-detect overflow at the wrapper, because the table technically doesn't
+overflow anymore. 
+
+To fix that, we provide an optional `elements.overflowingChild` parameter. Pass the table (or any other element whose 
+overflow has already been handled) to the library, and it will use that element (instead of the wrapper) to decide if
+the button needs to be shown or not.
+
+```js
+import { ContentZoom } from '@ryze-digital/content-zoom';
+
+document.querySelectorAll('.content-zoom').forEach((el) => {
+    new ContentZoom({
+        el,
+        elements: {
+            overflowingChild: el.querySelector('table')
+        }   
+    }).init();
+});
+```
 
 ## Demos
 
