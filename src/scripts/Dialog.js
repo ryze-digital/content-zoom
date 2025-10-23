@@ -35,11 +35,11 @@ export class Dialog {
 
         Object.assign(closeButton, {
             textContent: this.contentZoom.options.labels.zoomOut,
+            ariaExpanded: 'true',
             type: 'button'
         });
 
         closeButton.classList.add(this.contentZoom.options.classes.button);
-        closeButton.classList.add(this.contentZoom.options.classes.buttonActive);
         closeButton.addEventListener('click', this.contentZoom.zoomOut);
 
         this.#dialog.innerHTML = this.contentZoom.options.el.innerHTML;

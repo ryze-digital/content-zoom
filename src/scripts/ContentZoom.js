@@ -54,7 +54,6 @@ export class ContentZoom extends Base {
             classes: {
                 zoomed: 'zoom',
                 button: 'content-zoom-trigger',
-                buttonActive: 'zoom-out',
                 dialog: 'content-zoom-dialog'
             }
         }, options);
@@ -115,7 +114,7 @@ export class ContentZoom extends Base {
     #appendZoomButton() {
         Object.assign(this.zoomButton, {
             textContent: this.options.labels.zoomIn,
-            ariaHidden: 'true',
+            ariaExpanded: 'false',
             type: 'button'
         });
 
@@ -141,14 +140,20 @@ export class ContentZoom extends Base {
     zoomOut = () => {
         this.#mode.zoomOut();
         this.zoomed = false;
-        this.zoomButton.textContent = this.options.labels.zoomIn;
-        this.zoomButton.classList.remove(this.options.classes.buttonActive);
+
+        Object.assign(this.zoomButton, {
+            textContent: this.options.labels.zoomIn,
+            ariaExpanded: 'false'
+        });
     };
 
     zoomIn = () => {
         this.#mode.zoomIn();
         this.zoomed = true;
-        this.zoomButton.textContent = this.options.labels.zoomOut;
-        this.zoomButton.classList.add(this.options.classes.buttonActive);
+
+        Object.assign(this.zoomButton, {
+            textContent: this.options.labels.zoomOut,
+            ariaExpanded: 'true'
+        });
     };
 }
