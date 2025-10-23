@@ -4,6 +4,7 @@ import { Dialog } from './Dialog.js';
 
 /**
  * @typedef {object} Mode
+ * @property {Function} init
  * @property {Function} zoomIn
  * @property {Function} zoomOut
  */
@@ -63,7 +64,10 @@ export class ContentZoom extends Base {
         }
 
         this.#mode = new Modes[this.options.mode](this);
+    }
 
+    init() {
+        this.#mode.init();
         this.#appendZoomButton();
         window.addEventListener('resize', ReduceFunctionCalls.throttle(this.#updateZoomButtonVisibility));
     }

@@ -138,7 +138,7 @@
             autoDetectOverflow = false;
         }
 
-        new ContentZoom({
+        const contentZoom = new ContentZoom({
             el,
             mode: el.dataset.mode,
             autoDetectOverflow,
@@ -146,6 +146,8 @@
                 overflowingChild
             }
         });
+
+        contentZoom.init()
     });
 </script>
 </body>

@@ -16,7 +16,9 @@ export class Dialog {
      */
     constructor(contentZoom) {
         this.contentZoom = contentZoom;
+    }
 
+    init() {
         this.#createDialog();
     }
 

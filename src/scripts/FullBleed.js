@@ -13,6 +13,8 @@ export class FullBleed {
         this.contentZoom = contentZoom;
     }
 
+    init() {}
+
     zoomIn() {
         this.contentZoom.options.el.classList.add(this.contentZoom.options.classes.zoomed);
     }
