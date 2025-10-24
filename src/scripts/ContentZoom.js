@@ -103,7 +103,7 @@ export class ContentZoom extends Base {
     /**
      * @returns {boolean}
      */
-    #isViewportIsBiggerThanEl() {
+    #isViewportBiggerThanEl() {
         if (this.options.autoDetectZoomability === false) {
             return true;
         }
@@ -134,7 +134,7 @@ export class ContentZoom extends Base {
     }
 
     #updateZoomButtonVisibility = () => {
-        this.zoomButton.hidden = !((this.#isContentOverflowing() && this.#isViewportIsBiggerThanEl()) || this.#zoomed === true);
+        this.zoomButton.hidden = !((this.#isContentOverflowing() && this.#isViewportBiggerThanEl()) || this.#zoomed === true);
     };
 
     toggleZoom = () => {
