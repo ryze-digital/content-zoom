@@ -12,6 +12,11 @@ export class Dialog {
     #dialog = document.createElement('dialog');
 
     /**
+     * @type {string}
+     */
+    #pendingEvent = '';
+
+    /**
      * @param {object} contentZoom
      */
     constructor(contentZoom) {
@@ -23,11 +28,17 @@ export class Dialog {
     }
 
     zoomIn() {
+        this.#dialog.addEventListener('transitionend', this.#onTransitionEnd, { once: true });
         this.#dialog.showModal();
+
+        this.#pendingEvent = 'afterZoomIn';
     }
 
     zoomOut() {
+        this.#dialog.addEventListener('transitionend', this.#onTransitionEnd, { once: true });
         this.#dialog.close();
+
+        this.#pendingEvent = 'afterZoomOut';
     }
 
     #createDialog() {
@@ -58,4 +69,9 @@ export class Dialog {
         this.contentZoom.zoomed = false;
         this.contentZoom.zoomButton.textContent = this.contentZoom.options.labels.zoomIn;
     };
+
+    #onTransitionEnd = () => {
+        this.contentZoom.emitEvent(this.#pendingEvent);
+        this.#pendingEvent = '';
+    }
 }

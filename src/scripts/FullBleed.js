@@ -7,6 +7,11 @@
  */
 export class FullBleed {
     /**
+     * @type {string}
+     */
+    #pendingEvent = '';
+
+    /**
      * @param {object} contentZoom
      */
     constructor(contentZoom) {
@@ -16,10 +21,25 @@ export class FullBleed {
     init() {}
 
     zoomIn() {
-        this.contentZoom.options.el.classList.add(this.contentZoom.options.classes.zoomed);
+        const el = this.contentZoom.options.el;
+
+        el.addEventListener('transitionend', this.#onTransitionEnd, { once: true });
+        el.classList.add(this.contentZoom.options.classes.zoomed);
+
+        this.#pendingEvent = 'afterZoomIn';
     }
 
     zoomOut() {
-        this.contentZoom.options.el.classList.remove(this.contentZoom.options.classes.zoomed);
+        const el = this.contentZoom.options.el;
+
+        el.addEventListener('transitionend', this.#onTransitionEnd, { once: true });
+        el.classList.remove(this.contentZoom.options.classes.zoomed);
+
+        this.#pendingEvent = 'afterZoomOut';
+    }
+
+    #onTransitionEnd = () => {
+        this.contentZoom.emitEvent(this.#pendingEvent);
+        this.#pendingEvent = '';
     }
 }

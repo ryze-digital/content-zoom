@@ -82,6 +82,11 @@ export class ContentZoom extends Base {
         this.#mode.init();
         this.#appendZoomButton();
         window.addEventListener('resize', ReduceFunctionCalls.throttle(this.#updateZoomButtonVisibility));
+
+        /**
+         * @event ContentZoom#afterInit
+         */
+        this.emitEvent('afterInit');
     }
     
     /**
@@ -179,6 +184,11 @@ export class ContentZoom extends Base {
     };
 
     zoomOut = () => {
+        /**
+         * @event ContentZoom#beforeZoomOut
+         */
+        this.emitEvent('beforeZoomOut');
+
         this.#mode.zoomOut();
         this.zoomed = false;
 
@@ -189,6 +199,11 @@ export class ContentZoom extends Base {
     };
 
     zoomIn = () => {
+        /**
+         * @event ContentZoom#beforeZoomIn
+         */
+        this.emitEvent('beforeZoomIn');
+
         this.#mode.zoomIn();
         this.zoomed = true;
 
