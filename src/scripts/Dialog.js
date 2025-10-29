@@ -34,7 +34,7 @@ export class Dialog {
         const closeButton = document.createElement('button');
 
         Object.assign(closeButton, {
-            textContent: this.contentZoom.options.labels.zoomOut,
+            textContent: this.contentZoom.getTranslation('zoomOut'),
             ariaExpanded: 'true',
             type: 'button'
         });

@@ -27,6 +27,11 @@ export class ContentZoom extends Base {
     #zoomed = false;
 
     /**
+     * @type {string}
+     */
+    #lang = 'en';
+
+    /**
      * @param {object} options
      * @param {HTMLElement} [options.el]
      * @param {'FullBleed'|'Dialog'} [options.mode]
@@ -42,9 +47,16 @@ export class ContentZoom extends Base {
             mode: 'FullBleed',
             autoDetectOverflow: true,
             autoDetectZoomability: true,
-            labels: {
-                zoomIn: 'Expand content',
-                zoomOut: 'Collapse content'
+            i18n: {
+                languages: ['en', 'de'],
+                zoomIn: {
+                    en: 'Expand content',
+                    de: 'Inhalt erweitern',
+                },
+                zoomOut: {
+                    en: 'Collapse content',
+                    de: 'Inhalt reduzieren',
+                }
             },
             elements: {
                 overflowingChild: null,
@@ -62,6 +74,7 @@ export class ContentZoom extends Base {
             this.options.elements.overflowingChild = this.options.el;
         }
 
+        this.#setLanguage();
         this.#mode = new Modes[this.options.mode](this);
     }
 
@@ -89,6 +102,30 @@ export class ContentZoom extends Base {
         this.#zoomed = state;
     }
 
+    #setLanguage() {
+        if (this.options.i18n.languages.includes(document.documentElement.lang) === false) {
+            return;
+        }
+
+        this.#lang = document.documentElement.lang;
+    }
+
+    /**
+     * @param {string} keyword
+     * @returns {string}
+     */
+    getTranslation(keyword) {
+        const translation = this.options.i18n[keyword];
+
+        if (typeof translation === 'string') {
+            return translation;
+        }
+
+        if (typeof translation === 'object') {
+            return translation[this.#lang];
+        }
+    }
+
     /**
      * @returns {boolean}
      */
@@ -113,7 +150,7 @@ export class ContentZoom extends Base {
 
     #appendZoomButton() {
         Object.assign(this.zoomButton, {
-            textContent: this.options.labels.zoomIn,
+            textContent: this.getTranslation('zoomIn'),
             ariaExpanded: 'false',
             type: 'button'
         });
@@ -146,7 +183,7 @@ export class ContentZoom extends Base {
         this.zoomed = false;
 
         Object.assign(this.zoomButton, {
-            textContent: this.options.labels.zoomIn,
+            textContent: this.getTranslation('zoomIn'),
             ariaExpanded: 'false'
         });
     };
@@ -156,7 +193,7 @@ export class ContentZoom extends Base {
         this.zoomed = true;
 
         Object.assign(this.zoomButton, {
-            textContent: this.options.labels.zoomOut,
+            textContent: this.getTranslation('zoomOut'),
             ariaExpanded: 'true'
         });
     };
