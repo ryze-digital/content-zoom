@@ -73,5 +73,5 @@ export class Dialog {
     #onTransitionEnd = () => {
         this.contentZoom.emitEvent(this.#pendingEvent);
         this.#pendingEvent = '';
-    }
+    };
 }

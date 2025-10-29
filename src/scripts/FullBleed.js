@@ -41,5 +41,5 @@ export class FullBleed {
     #onTransitionEnd = () => {
         this.contentZoom.emitEvent(this.#pendingEvent);
         this.#pendingEvent = '';
-    }
+    };
 }
