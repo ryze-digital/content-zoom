@@ -104,7 +104,7 @@
         a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel
         augue. Curabitur ullamcorper ultricies nisi.
     </p>
-    <div class="content-zoom" id="full-bleed-mode-demo" data-mode="FullBleed" data-auto-detect-overflow="false">
+    <div class="content-zoom" id="full-bleed-mode-demo" data-mode="FullBleed">
         <h2>Image to zoom</h2>
         <img src="https://placehold.co/3000x1500" alt="Placeholder Image" loading="lazy">
     </div>
@@ -128,20 +128,14 @@
 
     document.querySelectorAll('.content-zoom').forEach((el) => {
         let overflowingChild = null;
-        let autoDetectOverflow = true;
 
         if (typeof el.dataset.overflowingChild !== 'undefined') {
             overflowingChild = el.querySelector(el.dataset.overflowingChild);
         }
 
-        if (el.dataset.autoDetectOverflow === 'false') {
-            autoDetectOverflow = false;
-        }
-
         const contentZoom = new ContentZoom({
             el,
             mode: el.dataset.mode,
-            autoDetectOverflow,
             elements: {
                 overflowingChild
             }

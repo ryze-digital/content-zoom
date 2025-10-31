@@ -40,7 +40,7 @@ export class ContentZoom extends Base {
         super({
             el: document.querySelector('.content-zoom'),
             mode: 'FullBleed',
-            autoDetectOverflow: true,
+            autoDetectOverflow: false,
             autoDetectZoomability: true,
             labels: {
                 zoomIn: 'Expand content',
