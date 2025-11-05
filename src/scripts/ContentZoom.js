@@ -1,4 +1,4 @@
-import { Base, ReduceFunctionCalls } from '@ryze-digital/js-utilities';
+import { Base, ReduceFunctionCalls, Tracker } from '@ryze-digital/js-utilities';
 import { FullBleed } from './FullBleed.js';
 import { Dialog } from './Dialog.js';
 
@@ -27,6 +27,11 @@ export class ContentZoom extends Base {
     #zoomed = false;
 
     /**
+     * @type {Tracker}
+     */
+    #tracker;
+
+    /**
      * @param {object} options
      * @param {HTMLElement} [options.el]
      * @param {'FullBleed'|'Dialog'} [options.mode]
@@ -42,6 +47,7 @@ export class ContentZoom extends Base {
             mode: 'FullBleed',
             autoDetectOverflow: false,
             autoDetectZoomability: true,
+            tracking: false,
             labels: {
                 zoomIn: 'Expand content',
                 zoomOut: 'Collapse content'
@@ -62,6 +68,10 @@ export class ContentZoom extends Base {
             this.options.elements.overflowingChild = this.options.el;
         }
 
+        if (this.options.tracking === true) {
+            this.#tracker = new Tracker();
+        }
+
         this.#mode = new Modes[this.options.mode](this);
     }
 
@@ -75,7 +85,7 @@ export class ContentZoom extends Base {
          */
         this.emitEvent('afterInit');
     }
-    
+
     /**
      * @returns {boolean}
      */
@@ -159,6 +169,8 @@ export class ContentZoom extends Base {
             textContent: this.options.labels.zoomIn,
             ariaExpanded: 'false'
         });
+
+        this.#track('zoomOut');
     };
 
     zoomIn = () => {
@@ -174,5 +186,19 @@ export class ContentZoom extends Base {
             textContent: this.options.labels.zoomOut,
             ariaExpanded: 'true'
         });
+
+        this.#track('zoomIn');
+    };
+
+    /**
+     * @param {string} action
+     * @param {number} value
+     */
+    #track = (action, value = undefined) => {
+        if (this.options.tracking === false) {
+            return;
+        }
+
+        this.#tracker.track('Content Zoom', action, this.options.el.id, value);
     };
 }

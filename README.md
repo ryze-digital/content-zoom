@@ -93,6 +93,7 @@ new ContentZoom({...}).init();
 | mode                      | string      | <code>'FullBleed'</code>                                                                                                                     | Switch between default (`'FullBleed'`) and legacy (`'Dialog'`) mode                                                                                                                                                             |
 | autoDetectOverflow        | boolean     | <code>false</code>                                                                                                                           | If set to `true` the button is only shown, if the the container has overflowing content. If set to `false` the button is always visible. In most cases `true` is only usefully in combination with `elements.overflowingChild`. |
 | autoDetectZoomability     | boolean     | <code>true</code>                                                                                                                            | If set to `true` the button gets hidden, if zooming wouldn't make the element bigger (for example if the content is the same size as the viewport). If set to `false` the button stays always visible.                          |
+| tracking                  | boolean     | <code>false</code>                                                                                                                           | Send automatic tracking for Google Analytics and/or Matomo                                                                                                                                                                      |
 | labels                    | object      | <pre>{<br>&nbsp;&nbsp;zoomIn: 'Expand content',<br>&nbsp;&nbsp;zoomOut: 'Collapse content'<br>}</pre>                                        | Default (button) labels                                                                                                                                                                                                         |
 | elements                  | object      |                                                                                                                                              | Elements used by the library                                                                                                                                                                                                    |
 | elements.overflowingChild | HTMLElement | <code>null</code>                                                                                                                            | An optional child element that can be used to `autoDetectOverflow`. This is needed, if the child element itself already has a solution against overflow (e.g. a `<table>` with a scrollbar)                                     |
@@ -126,6 +127,14 @@ document.querySelectorAll('.content-zoom').forEach((el) => {
 });
 ```
 
+### Special note for tracking
+
+If you've set the option `tracking` to `true`, the library will detect if there is a Matomo (`_paq`) or Google Analytics
+(`gtag`) present in the window object and will then automatically send the following actions to this tracking service:
+
+- `'Content Zoom'`, `'zoomIn'`, ID of the element being zoomed in
+- `'Content Zoom'`, `'zoomOut'`, ID of the element being zoomed out
+
 ## Demos
 
 Check out this repository to run the demos in a browser.
@@ -133,3 +142,5 @@ Check out this repository to run the demos in a browser.
 - [Full-Bleed Mode (default)](/demos/full-bleed.html)
 - [Dialog Mode (for legacy projects)](/demos/dialog.html)
 - [Multiple Instances](/demos/multiple-instances.html)
+- [Event Binding](/demos/event-binding.html)
+- [Tracking](/demos/tracking.html)
