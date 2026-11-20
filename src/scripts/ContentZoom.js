@@ -1,6 +1,6 @@
-import { Base, ReduceFunctionCalls, Tracker } from '@ryze-digital/js-utilities';
-import { FullBleed } from './FullBleed.js';
-import { Dialog } from './Dialog.js';
+import { Base, ReduceFunctionCalls, Tracker } from "@ryze-digital/js-utilities";
+import { FullBleed } from "./FullBleed.js";
+import { Dialog } from "./Dialog.js";
 
 /**
  * @typedef {object} Mode
@@ -19,7 +19,7 @@ export class ContentZoom extends Base {
     /**
      * @type {HTMLButtonElement}
      */
-    zoomButton = document.createElement('button');
+    zoomButton = document.createElement("button");
 
     /**
      * @type {boolean}
@@ -42,27 +42,30 @@ export class ContentZoom extends Base {
      * @param {object} [options.classes]
      */
     constructor(options) {
-        super({
-            el: document.querySelector('.content-zoom'),
-            mode: 'FullBleed',
-            autoDetectOverflow: false,
-            autoDetectZoomability: true,
-            tracking: false,
-            labels: {
-                zoomIn: 'Expand content',
-                zoomOut: 'Collapse content'
+        super(
+            {
+                el: document.querySelector(".content-zoom"),
+                mode: "FullBleed",
+                autoDetectOverflow: false,
+                autoDetectZoomability: true,
+                tracking: false,
+                labels: {
+                    zoomIn: "Expand content",
+                    zoomOut: "Collapse content",
+                },
+                elements: {
+                    overflowingChild: null,
+                    limitingAncestor: document.body,
+                    buttonTarget: null,
+                },
+                classes: {
+                    zoomed: "zoom",
+                    button: "content-zoom-trigger",
+                    dialog: "content-zoom-dialog",
+                },
             },
-            elements: {
-                overflowingChild: null,
-                limitingAncestor: document.body,
-                buttonTarget: null
-            },
-            classes: {
-                zoomed: 'zoom',
-                button: 'content-zoom-trigger',
-                dialog: 'content-zoom-dialog'
-            }
-        }, options);
+            options,
+        );
 
         if (this.options.elements.overflowingChild === null) {
             this.options.elements.overflowingChild = this.options.el;
@@ -78,12 +81,12 @@ export class ContentZoom extends Base {
     init() {
         this.#mode.init();
         this.#appendZoomButton();
-        window.addEventListener('resize', ReduceFunctionCalls.throttle(this.#updateZoomButtonVisibility));
+        window.addEventListener("resize", ReduceFunctionCalls.throttle(this.#updateZoomButtonVisibility));
 
         /**
          * @event ContentZoom#afterInit
          */
-        this.emitEvent('afterInit');
+        this.emitEvent("afterInit");
     }
 
     /**
@@ -97,8 +100,8 @@ export class ContentZoom extends Base {
      * @param {boolean} state
      */
     set zoomed(state) {
-        if (typeof state !== 'boolean') {
-            throw new Error('The zoomed state must be a boolean.');
+        if (typeof state !== "boolean") {
+            throw new Error("The zoomed state must be a boolean.");
         }
 
         this.#zoomed = state;
@@ -129,16 +132,16 @@ export class ContentZoom extends Base {
     #appendZoomButton() {
         Object.assign(this.zoomButton, {
             textContent: this.options.labels.zoomIn,
-            ariaExpanded: 'false',
-            type: 'button'
+            ariaExpanded: "false",
+            type: "button",
         });
 
         this.#updateZoomButtonVisibility();
         this.zoomButton.classList.add(this.options.classes.button);
-        this.zoomButton.addEventListener('click', this.toggleZoom);
+        this.zoomButton.addEventListener("click", this.toggleZoom);
 
-        if (this.options.el.id !== '') {
-            this.zoomButton.setAttribute('aria-controls', this.options.el.id);
+        if (this.options.el.id !== "") {
+            this.zoomButton.setAttribute("aria-controls", this.options.el.id);
         }
 
         if (this.options.elements.buttonTarget === null) {
@@ -149,7 +152,10 @@ export class ContentZoom extends Base {
     }
 
     #updateZoomButtonVisibility = () => {
-        this.zoomButton.hidden = !((this.#isContentOverflowing() && this.#isViewportBiggerThanEl()) || this.#zoomed === true);
+        this.zoomButton.hidden = !(
+            (this.#isContentOverflowing() && this.#isViewportBiggerThanEl()) ||
+            this.#zoomed === true
+        );
     };
 
     toggleZoom = () => {
@@ -160,34 +166,34 @@ export class ContentZoom extends Base {
         /**
          * @event ContentZoom#beforeZoomOut
          */
-        this.emitEvent('beforeZoomOut');
+        this.emitEvent("beforeZoomOut");
 
         this.#mode.zoomOut();
         this.zoomed = false;
 
         Object.assign(this.zoomButton, {
             textContent: this.options.labels.zoomIn,
-            ariaExpanded: 'false'
+            ariaExpanded: "false",
         });
 
-        this.#track('zoomOut');
+        this.#track("zoomOut");
     };
 
     zoomIn = () => {
         /**
          * @event ContentZoom#beforeZoomIn
          */
-        this.emitEvent('beforeZoomIn');
+        this.emitEvent("beforeZoomIn");
 
         this.#mode.zoomIn();
         this.zoomed = true;
 
         Object.assign(this.zoomButton, {
             textContent: this.options.labels.zoomOut,
-            ariaExpanded: 'true'
+            ariaExpanded: "true",
         });
 
-        this.#track('zoomIn');
+        this.#track("zoomIn");
     };
 
     /**
@@ -199,6 +205,6 @@ export class ContentZoom extends Base {
             return;
         }
 
-        this.#tracker.track('Content Zoom', action, this.options.el.id, value);
+        this.#tracker.track("Content Zoom", action, this.options.el.id, value);
     };
 }
