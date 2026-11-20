@@ -60,6 +60,8 @@
     overflow-y: visible;
     width: 100%;
     -webkit-overflow-scrolling: touch;
+  }
+  table {
     border-collapse: collapse;
   }
   table :where(td, th) {
