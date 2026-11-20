@@ -9,12 +9,12 @@ export class Dialog {
     /**
      * @type {HTMLDialogElement}
      */
-    #dialog = document.createElement('dialog');
+    #dialog = document.createElement("dialog");
 
     /**
      * @type {string}
      */
-    #pendingEvent = '';
+    #pendingEvent = "";
 
     /**
      * @param {object} contentZoom
@@ -28,34 +28,34 @@ export class Dialog {
     }
 
     zoomIn() {
-        this.#dialog.addEventListener('transitionend', this.#onTransitionEnd, { once: true });
+        this.#dialog.addEventListener("transitionend", this.#onTransitionEnd, { once: true });
         this.#dialog.showModal();
 
-        this.#pendingEvent = 'afterZoomIn';
+        this.#pendingEvent = "afterZoomIn";
     }
 
     zoomOut() {
-        this.#dialog.addEventListener('transitionend', this.#onTransitionEnd, { once: true });
+        this.#dialog.addEventListener("transitionend", this.#onTransitionEnd, { once: true });
         this.#dialog.close();
 
-        this.#pendingEvent = 'afterZoomOut';
+        this.#pendingEvent = "afterZoomOut";
     }
 
     #createDialog() {
-        const closeButton = document.createElement('button');
+        const closeButton = document.createElement("button");
 
         Object.assign(closeButton, {
             textContent: this.contentZoom.options.labels.zoomOut,
-            ariaExpanded: 'true',
-            type: 'button'
+            ariaExpanded: "true",
+            type: "button",
         });
 
         closeButton.classList.add(this.contentZoom.options.classes.button);
-        closeButton.addEventListener('click', this.contentZoom.zoomOut);
+        closeButton.addEventListener("click", this.contentZoom.zoomOut);
 
         this.#dialog.innerHTML = this.contentZoom.options.el.innerHTML;
         this.#dialog.classList.add(this.contentZoom.options.classes.dialog);
-        this.#dialog.addEventListener('close', this.#cleanUpAfterClose);
+        this.#dialog.addEventListener("close", this.#cleanUpAfterClose);
         this.#dialog.prepend(closeButton);
 
         document.body.append(this.#dialog);
@@ -72,6 +72,6 @@ export class Dialog {
 
     #onTransitionEnd = () => {
         this.contentZoom.emitEvent(this.#pendingEvent);
-        this.#pendingEvent = '';
+        this.#pendingEvent = "";
     };
 }
