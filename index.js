@@ -1,5 +1,3 @@
-import { ContentZoom } from './src/scripts/ContentZoom.js';
+import { ContentZoom } from "./src/scripts/ContentZoom.js";
 
-export {
-    ContentZoom
-};
+export { ContentZoom };
