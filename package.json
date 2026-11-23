@@ -32,8 +32,8 @@
     "sass": "^1.108.2"
   },
   "dependencies": {
-    "@ryze-digital/js-utilities": "^1.2.0",
-    "@ryze-digital/scss-utilities": "^1.1.2"
+    "@ryze-digital/js-utilities": "^1.3.0",
+    "@ryze-digital/scss-utilities": "^1.2.0"
   },
   "engines": {
     "node": ">=24.15",
